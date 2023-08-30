@@ -1,0 +1,35 @@
+version: '4'
+services:
+  facedancer:
+    # set container name
+    container_name: facedancer
+
+    # build the contaier
+    build:
+      context: .
+      dockerfile: Dockerfile
+    
+    # set volumes
+    volumes:
+      - './src:/workspace'
+      - './models/retinaface:/workspace/retinaface'
+      - './models/arcface_model:/workspace/arcface_model'
+      - './models/model_zoo:/workspace/model_zoo'
+      - './src/results:/workspace/results'
+    ports:
+      - '5999:8000'
+
+    # enable interactive terminal
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
+    
+    # attach gpu to the container
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+#    entrypoint: ["/bin/sh", "-c"]
+#    command: ["tail", "-f", "/dev/null"]

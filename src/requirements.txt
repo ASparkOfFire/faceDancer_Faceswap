@@ -1,0 +1,16 @@
+fastapi
+imageio
+imageio-ffmpeg
+moviepy==1.0.3
+numpy
+opencv-contrib-python==4.5.5.64
+opencv-python==4.5.5.64
+#opencv-python-headless
+python-multipart
+requests
+scikit-image
+scipy
+tensorflow
+tensorflow-addons
+tqdm
+uvicorn
