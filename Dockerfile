@@ -10,4 +10,6 @@ RUN apt-get install ffmpeg libsm6 libxext6 tzdata -y
 
 RUN pip install -r /workspace/requirements.txt
 
+RUN apt -y install ffmpeg
+
 ENTRYPOINT ["python", "api.py"]

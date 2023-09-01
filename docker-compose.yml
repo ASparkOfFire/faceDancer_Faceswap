@@ -1,5 +1,26 @@
 version: '4'
 services:
+  infzoom:
+    container_name: infzoom
+    restart: always
+    build:
+      context: ./infzoom
+      dockerfile: Dockerfile
+    ports:
+     - '5999:8000'
+    volumes:
+     - './infzoom/src:/app'
+     - './infzoom/images:/images'
+     - './infzoom/output:/output'
+  redis:
+    image: redis:6.0.7
+    container_name: redis
+    restart: always
+    volumes:
+      - redis_volume_data:/data
+    ports:
+      - 6379:6379
+
   facedancer:
     # set container name
     container_name: facedancer
@@ -10,7 +31,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    
+
     # set volumes
     volumes:
       - './src:/workspace'
@@ -19,7 +40,7 @@ services:
       - './models/model_zoo:/workspace/model_zoo'
       - './src/results:/workspace/results'
     ports:
-      - '5999:8000'
+      - '8000:8000'
 
     # enable interactive terminal
     stdin_open: true # docker run -i
@@ -33,5 +54,5 @@ services:
             - driver: nvidia
               count: 1
               capabilities: [gpu]
-#    entrypoint: ["/bin/sh", "-c"]
-#    command: ["tail", "-f", "/dev/null"]
+volumes:
+  redis_volume_data:
