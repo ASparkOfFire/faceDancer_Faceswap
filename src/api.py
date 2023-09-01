@@ -41,21 +41,21 @@ def test_api():
     return {"Hello": "World"}
 
 @app.post("/faceswap")
-async def generate(content_image: UploadFile = File(...), target_image: UploadFile = File(...)):
+async def generate(source: UploadFile = File(...), target: UploadFile = File(...)):
     os.makedirs('./results', exist_ok=True)
     os.system('rm -rf ./results/*')
 
     # Create temporary directories to store the uploaded images
     with tempfile.TemporaryDirectory() as tmp_content_dir, tempfile.TemporaryDirectory() as tmp_target_dir, tempfile.TemporaryDirectory() as tmp_output_dir:
         # Save content image file
-        input_image_file_path1 = os.path.join(tmp_content_dir, content_image.filename)
+        input_image_file_path1 = os.path.join(tmp_content_dir, source.filename)
         with open(input_image_file_path1, "wb") as buffer:
-            shutil.copyfileobj(content_image.file, buffer)
+            shutil.copyfileobj(source.file, buffer)
 
         # Save target image file
-        input_image_file_path2 = os.path.join(tmp_target_dir, target_image.filename)
+        input_image_file_path2 = os.path.join(tmp_target_dir, target.filename)
         with open(input_image_file_path2, "wb") as buffer:
-            shutil.copyfileobj(target_image.file, buffer)
+            shutil.copyfileobj(target.file, buffer)
 
         print('\nProcessing images...')
         
@@ -74,7 +74,7 @@ async def generate(content_image: UploadFile = File(...), target_image: UploadFi
         
         # Return the result image as a downloadable attachment
         response = Response(content=result_image_data)
-        response.headers["Content-Disposition"] = "attachment; filename=swapped_image.jpg"
+        response.headers["Content-Disposition"] = "attachment; filename={target_image.filename}"
         response.headers["Content-Type"] = "image/jpeg"
         return response
     

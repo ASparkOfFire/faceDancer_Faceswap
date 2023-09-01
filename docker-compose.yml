@@ -4,6 +4,8 @@ services:
     # set container name
     container_name: facedancer
 
+    restart: always
+
     # build the contaier
     build:
       context: .
