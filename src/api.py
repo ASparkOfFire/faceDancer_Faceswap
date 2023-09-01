@@ -74,7 +74,7 @@ async def generate(source: UploadFile = File(...), target: UploadFile = File(...
         
         # Return the result image as a downloadable attachment
         response = Response(content=result_image_data)
-        response.headers["Content-Disposition"] = f"attachment; filename={target_image.filename}"
+        response.headers["Content-Disposition"] = f"attachment; filename={target.filename}"
         response.headers["Content-Type"] = "image/jpeg"
         return response
     
