@@ -12,6 +12,7 @@ services:
      - './infzoom/src:/app'
      - './infzoom/images:/images'
      - './infzoom/output:/output'
+     - './infzoom/audio:/audio'
   redis:
     image: redis:6.0.7
     container_name: redis
