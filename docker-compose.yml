@@ -11,8 +11,10 @@ services:
     volumes:
      - './infzoom/src:/app'
      - './infzoom/images:/images'
+     - './infzoom/images_female:/images_female'
      - './infzoom/output:/output'
      - './infzoom/audio:/audio'
+     - './infzoom/logo:/logo'
   redis:
     image: redis:6.0.7
     container_name: redis
